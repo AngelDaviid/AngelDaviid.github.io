@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Character Details</title>
+</head>
+<body>
+    <div class="character-details-container">
+        <div id="character-details"></div>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const characterId = params.get('id');
+
+        fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
+            .then(response => response.json())
+            .then(character => {
+                const detailsContainer = document.getElementById('character-details');
+                detailsContainer.innerHTML = `
+                    <h2>${character.name}</h2>
+                    <img src="${character.image}" alt="${character.name}">
+                    <p><strong>Status:</strong> ${character.status}</p>
+                    <p><strong>Species:</strong> ${character.species}</p>
+                    <p><strong>Gender:</strong> ${character.gender}</p>
+                    <p><strong>Origin:</strong> ${character.origin.name}</p>
+                    <p><strong>Last known location:</strong> ${character.location.name}</p>
+                `;
+            });
+    </script>
+</body>
+</html>
